@@ -1,0 +1,49 @@
+{
+  "name": "proxyparity",
+  "version": "0.1.0",
+  "description": "Explain how curl, Wget, Python, Go, and Ruby disagree about proxy environment variables.",
+  "type": "module",
+  "bin": {
+    "proxyparity": "./bin/proxyparity.mjs"
+  },
+  "exports": {
+    ".": "./src/index.mjs",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "bin",
+    "src",
+    "examples",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test",
+    "test:coverage": "node --test --experimental-test-coverage",
+    "check:syntax": "node scripts/check-syntax.mjs",
+    "demo": "node scripts/build-demo.mjs",
+    "pack:check": "node scripts/package-check.mjs",
+    "check": "npm run test:coverage && npm run check:syntax && npm run demo && npm run pack:check",
+    "prepack": "npm run check:syntax && npm test"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "keywords": [
+    "no-proxy",
+    "proxy",
+    "devops",
+    "debugging",
+    "curl",
+    "ci"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KanadeK/proxyparity.git"
+  },
+  "bugs": {
+    "url": "https://github.com/KanadeK/proxyparity/issues"
+  },
+  "homepage": "https://github.com/KanadeK/proxyparity#readme"
+}
