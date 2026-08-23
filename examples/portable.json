@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "environment": {
+    "http_proxy": "http://proxy.example:8080",
+    "https_proxy": "http://proxy.example:8080",
+    "no_proxy": "internal.example,localhost"
+  },
+  "targets": [
+    {
+      "url": "https://api.internal.example/health",
+      "resolvedIps": ["10.42.7.18"]
+    },
+    {
+      "url": "http://localhost:3000/ready",
+      "resolvedIps": ["127.0.0.1"]
+    },
+    {
+      "url": "https://public.example/download",
+      "resolvedIps": ["203.0.113.20"]
+    }
+  ]
+}
