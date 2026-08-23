@@ -9,6 +9,6 @@
 - [x] Documentation and failure recovery
 - [x] CI and package smoke test
 - [x] Full local acceptance
-- [ ] Commit and author hygiene check
-- [ ] Public repository, CI, tag, Release, and asset
-- [ ] Gmail completion notice
+- [x] Commit and author hygiene check
+- [x] Public repository, CI, tag, Release, and asset
+- [x] Gmail completion notice
