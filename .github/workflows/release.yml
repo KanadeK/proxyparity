@@ -1,0 +1,52 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out tagged source
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Install locked dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Run full acceptance gate
+        run: npm run check
+
+      - name: Name release artifacts
+        shell: bash
+        run: |
+          cp build/demo/index.html dist/proxyparity-demo.html
+          cp build/demo/report.json dist/proxyparity-demo-report.json
+
+      - name: Create GitHub Release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >-
+          gh release create "$GITHUB_REF_NAME"
+          dist/proxyparity-*.tgz
+          dist/proxyparity-demo.html
+          dist/proxyparity-demo-report.json
+          --verify-tag
+          --generate-notes
+          --title "ProxyParity $GITHUB_REF_NAME"

@@ -85,12 +85,13 @@ export function renderHtml(report, { title = "ProxyParity report" } = {}) {
   <style>
     :root { --ink:#eef7f3; --muted:#92a7a0; --panel:#111b1a; --line:#263b36; --mint:#6fffc1; --amber:#ffcc66; --red:#ff6b7d; --blue:#78a9ff; }
     * { box-sizing:border-box; }
+    html,body { max-width:100%; overflow-x:hidden; }
     body { margin:0; color:var(--ink); background:#08100f; font:15px/1.55 ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace; }
     body::before { content:""; position:fixed; inset:0; pointer-events:none; background:radial-gradient(circle at 80% 0%,rgba(111,255,193,.10),transparent 34rem),linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px); background-size:auto,32px 32px,32px 32px; }
     main { position:relative; width:min(1180px,calc(100% - 32px)); margin:0 auto; padding:64px 0 88px; }
     .eyebrow { color:var(--mint); font-size:12px; letter-spacing:.16em; text-transform:uppercase; }
     h1,h2,p { margin-top:0; }
-    h1 { max-width:850px; margin-bottom:16px; font:700 clamp(40px,7vw,76px)/.98 Inter,system-ui,sans-serif; letter-spacing:-.055em; }
+    h1 { max-width:850px; margin-bottom:16px; overflow-wrap:anywhere; font:700 clamp(40px,7vw,76px)/.98 Inter,system-ui,sans-serif; letter-spacing:-.055em; }
     .lede { max-width:760px; color:var(--muted); font:18px/1.6 Inter,system-ui,sans-serif; }
     .summary { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:40px 0; }
     .metric { min-height:126px; padding:20px; border:1px solid var(--line); border-radius:16px; background:rgba(17,27,26,.9); box-shadow:0 18px 60px rgba(0,0,0,.18); }
@@ -99,14 +100,15 @@ export function renderHtml(report, { title = "ProxyParity report" } = {}) {
     .metric.is-alert strong { color:var(--red); }
     .section-title { margin:48px 0 16px; font:700 22px/1.2 Inter,system-ui,sans-serif; }
     .findings { display:grid; gap:8px; padding:0; list-style:none; }
-    .finding { display:grid; grid-template-columns:max-content 1fr; gap:3px 16px; padding:14px 16px; border:1px solid var(--line); border-left:3px solid var(--amber); border-radius:10px; background:rgba(17,27,26,.82); }
+    .finding { display:grid; min-width:0; grid-template-columns:max-content minmax(0,1fr); gap:3px 16px; padding:14px 16px; border:1px solid var(--line); border-left:3px solid var(--amber); border-radius:10px; background:rgba(17,27,26,.82); }
     .finding-error { border-left-color:var(--red); }
     .finding-clear { border-left-color:var(--mint); }
+    .finding code,.finding span,.finding small { overflow-wrap:anywhere; }
     .finding code { color:var(--amber); }
     .finding-error code { color:var(--red); }
     .finding-clear code { color:var(--mint); }
     .finding small { grid-column:2; color:var(--muted); overflow-wrap:anywhere; }
-    .target-card { margin-top:18px; overflow:hidden; border:1px solid var(--line); border-radius:18px; background:rgba(17,27,26,.94); box-shadow:0 22px 70px rgba(0,0,0,.24); }
+    .target-card { min-width:0; margin-top:18px; overflow:hidden; border:1px solid var(--line); border-radius:18px; background:rgba(17,27,26,.94); box-shadow:0 22px 70px rgba(0,0,0,.24); }
     .target-heading { display:flex; align-items:flex-start; justify-content:space-between; gap:24px; padding:24px; border-bottom:1px solid var(--line); }
     .target-heading h2 { margin:6px 0 4px; font:700 24px/1.2 Inter,system-ui,sans-serif; }
     .target-heading h2 span { color:var(--muted); font-weight:500; }
@@ -132,7 +134,7 @@ export function renderHtml(report, { title = "ProxyParity report" } = {}) {
     .sources span { color:var(--muted); font-size:11px; }
     footer { margin-top:48px; color:var(--muted); }
     @media (max-width:800px) { main { padding-top:36px; } .summary { grid-template-columns:1fr 1fr; } .sources { grid-template-columns:1fr 1fr; } .target-heading { flex-direction:column; } }
-    @media (max-width:480px) { .summary,.sources { grid-template-columns:1fr; } }
+    @media (max-width:600px) { h1 { font-size:clamp(34px,10vw,48px); } .summary,.sources { grid-template-columns:1fr; } .finding { grid-template-columns:minmax(0,1fr); } .finding small { grid-column:1; } }
   </style>
 </head>
 <body>

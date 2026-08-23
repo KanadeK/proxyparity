@@ -14,7 +14,12 @@
     "bin",
     "src",
     "examples",
+    "docs",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md",
     "README.md",
+    "README.zh-CN.md",
+    "SECURITY.md",
     "LICENSE"
   ],
   "scripts": {
@@ -37,6 +42,7 @@
     "curl",
     "ci"
   ],
+  "author": "KanadeK",
   "license": "MIT",
   "repository": {
     "type": "git",
