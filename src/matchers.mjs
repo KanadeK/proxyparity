@@ -10,6 +10,12 @@ export function splitRules(value) {
     .filter(Boolean);
 }
 
+export function splitRubyRules(value) {
+  return [...value.matchAll(/([^:,\s]+)(?::(\d+))?/g)].map((match) =>
+    match[2] ? `${match[1]}:${match[2]}` : match[1],
+  );
+}
+
 function normalizeDomain(value) {
   const ascii = domainToASCII(value.toLowerCase());
   return ascii || value.toLowerCase();

@@ -76,5 +76,6 @@ test("HTML renderer is standalone, script-free, and escapes report values", () =
   assert.match(output, /matched &lt;unsafe&gt;/);
   assert.doesNotMatch(output, /<script[\s>]/i);
   assert.match(output, /<style>/);
+  assert.match(output, /Content-Security-Policy/);
   assert.match(output, /ROUTE_DISAGREEMENT/);
 });

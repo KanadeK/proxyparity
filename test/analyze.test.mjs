@@ -48,6 +48,18 @@ test("validation rejects invalid resolved IPs", () => {
   );
 });
 
+test("validation rejects malformed proxy endpoints at the environment boundary", () => {
+  assert.throws(
+    () =>
+      validateScenario({
+        schemaVersion: 1,
+        environment: { https_proxy: "http://" },
+        targets: [{ url: "https://example.com" }],
+      }),
+    /environment\.https_proxy must be a proxy URL or host:port/,
+  );
+});
+
 test("analysis counts endpoint and route disagreements", () => {
   const report = analyzeScenario({
     schemaVersion: 1,

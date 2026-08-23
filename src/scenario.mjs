@@ -9,7 +9,13 @@ const ALLOWED_ENVIRONMENT_KEYS = new Set([
   "NO_PROXY",
   "REQUEST_METHOD",
   "CGI_HTTP_PROXY",
-  "SERVER_NAME",
+]);
+const PROXY_ENVIRONMENT_KEYS = new Set([
+  "http_proxy",
+  "HTTP_PROXY",
+  "https_proxy",
+  "HTTPS_PROXY",
+  "CGI_HTTP_PROXY",
 ]);
 
 function isPlainObject(value) {
@@ -92,6 +98,20 @@ export function validateScenario(input) {
     }
     if (value.length > 8192) {
       throw new TypeError(`environment.${key} exceeds 8192 characters`);
+    }
+    if (value !== "" && PROXY_ENVIRONMENT_KEYS.has(key)) {
+      const candidate = value.includes("://") ? value : `http://${value}`;
+      try {
+        const proxyUrl = new URL(candidate);
+        if (!proxyUrl.hostname) {
+          throw new TypeError("missing hostname");
+        }
+      } catch (error) {
+        if (error instanceof TypeError) {
+          throw new TypeError(`environment.${key} must be a proxy URL or host:port`);
+        }
+        throw error;
+      }
     }
     environment[key] = value;
   }

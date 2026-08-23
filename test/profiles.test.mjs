@@ -77,6 +77,20 @@ test("wildcard handling distinguishes Python's sole-star rule", () => {
   assert.equal(sole.python.route, "DIRECT");
 });
 
+test("Ruby accepts whitespace-separated no_proxy entries", () => {
+  const result = evaluateAll(
+    {
+      http_proxy: "http://proxy.example:8080",
+      no_proxy: "first.example second.example",
+    },
+    { url: "http://second.example" },
+  );
+
+  assert.equal(result.ruby.route, "DIRECT");
+  assert.equal(result.ruby.matchedRule, "second.example");
+  assert.equal(result.python.route, "PROXY");
+});
+
 test("CIDR against a hostname uses Ruby's supplied DNS result only", () => {
   const result = evaluateAll(
     {

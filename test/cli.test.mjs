@@ -95,11 +95,14 @@ test("portable audit exits 0 and JSON output stays machine-readable", async () =
 test("profiles and version commands expose pinned release metadata", () => {
   const profiles = run(["profiles", "--json"]);
   const version = run(["--version"]);
+  const auditHelp = run(["audit", "--help"]);
 
   assert.equal(profiles.status, 0, profiles.stderr);
   assert.equal(JSON.parse(profiles.stdout).length, 5);
   assert.equal(version.status, 0, version.stderr);
   assert.equal(version.stdout.trim(), "0.1.0");
+  assert.equal(auditHelp.status, 0, auditHelp.stderr);
+  assert.match(auditHelp.stdout, /proxyparity audit <scenario\.json>/);
 });
 
 test("invalid JSON and unsupported options exit 1 with actionable errors", async () => {

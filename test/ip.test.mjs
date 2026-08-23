@@ -15,6 +15,7 @@ test("loopback detection covers IPv4 and IPv6", () => {
   assert.equal(isLoopbackIp("127.0.0.1"), true);
   assert.equal(isLoopbackIp("127.99.1.2"), true);
   assert.equal(isLoopbackIp("::1"), true);
+  assert.equal(isLoopbackIp("::ffff:127.0.0.1"), true);
   assert.equal(isLoopbackIp("10.0.0.1"), false);
 });
 

@@ -139,6 +139,10 @@ export async function runCli(
   if (args[0] !== "audit") {
     throw new TypeError(`Unknown command: ${args[0]}`);
   }
+  if (args.slice(1).some((argument) => argument === "--help" || argument === "-h")) {
+    stdout.write(HELP);
+    return 0;
+  }
 
   const options = parseAuditArguments(args.slice(1));
   const scenarioPath = path.resolve(options.scenarioPath);

@@ -92,5 +92,9 @@ export function isLoopbackIp(address) {
   if (parsed.family === 4) {
     return parsed.value >> 24n === 127n;
   }
-  return parsed.value === 1n;
+  if (parsed.value === 1n) {
+    return true;
+  }
+  const isIpv4Mapped = parsed.value >> 32n === 0xffffn;
+  return isIpv4Mapped && ((parsed.value >> 24n) & 0xffn) === 127n;
 }

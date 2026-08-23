@@ -5,6 +5,7 @@ import {
   matchPythonRule,
   matchRubyRule,
   matchWgetRule,
+  splitRubyRules,
   splitRules,
 } from "./matchers.mjs";
 
@@ -113,7 +114,7 @@ function selectNoProxy(profileId, environment) {
 }
 
 function findMatchingRule(profileId, target, value) {
-  const rules = splitRules(value);
+  const rules = profileId === "ruby" ? splitRubyRules(value) : splitRules(value);
   if (profileId === "python" && value.trim() === "*") {
     return "*";
   }
@@ -195,7 +196,11 @@ export function evaluateProfile(profileId, target, environment) {
   }
 
   const rubyAddress = target.literalIp ?? target.resolvedIps[0];
-  if (profileId === "ruby" && rubyAddress && isLoopbackIp(rubyAddress)) {
+  if (
+    profileId === "ruby" &&
+    rubyAddress &&
+    (rubyAddress.startsWith("127.") || rubyAddress === "::1")
+  ) {
     return directDecision(
       profileId,
       proxy,

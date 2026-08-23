@@ -1,5 +1,5 @@
 import { spawnSync } from "node:child_process";
-import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -8,6 +8,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const dist = path.join(root, "dist");
 const npmCache = path.join(root, "build", "npm-cache");
 const npmCli = process.env.npm_execpath;
+const packageVersion = JSON.parse(await readFile(path.join(root, "package.json"), "utf8")).version;
 
 if (!npmCli) {
   throw new Error("Run the package smoke test with npm run pack:check");
@@ -63,7 +64,7 @@ try {
     "proxyparity.mjs",
   );
   const version = run(process.execPath, [installedBin, "--version"], temporaryProject).trim();
-  if (version !== "0.1.0") {
+  if (version !== packageVersion) {
     throw new Error(`Packed CLI returned unexpected version: ${version}`);
   }
 

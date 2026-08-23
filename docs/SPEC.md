@@ -34,8 +34,9 @@ An audit reads one UTF-8 JSON file no larger than 1 MiB:
 ```
 
 Allowed environment keys are `http_proxy`, `HTTP_PROXY`, `https_proxy`,
-`HTTPS_PROXY`, `no_proxy`, `NO_PROXY`, `REQUEST_METHOD`, `CGI_HTTP_PROXY`, and
-`SERVER_NAME`. Values are strings. A scenario contains 1 to 500 targets. Each
+`HTTPS_PROXY`, `no_proxy`, `NO_PROXY`, `REQUEST_METHOD`, and `CGI_HTTP_PROXY`.
+Values are strings. Non-empty proxy endpoints must be a URL or `host:port`. A
+scenario contains 1 to 500 targets. Each
 target has an absolute `http:` or `https:` URL and up to 16 valid IP addresses
 that represent an already-known DNS result.
 
